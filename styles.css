@@ -1,0 +1,2423 @@
+/* ==========================================================================
+   Lory · Field Canvas (Unexpected Minimalist Smooth UI)
+   Braun × Teenage Engineering × Zero-Chrome Spatial Hardware Utility
+   ========================================================================== */
+
+:root {
+  /* Material Design 3 Tonal Surface & Accent Coloring */
+  --bg-canvas: #141218;
+  --bg-canvas-dot: rgba(230, 224, 233, 0.055);
+  --surface-dock: rgba(29, 27, 32, 0.88);
+  --surface-well: #17151b;
+  --surface-elevated: #2b2930;
+  --surface-hover: #36343b;
+
+  --hairline: rgba(202, 196, 208, 0.11);
+  --hairline-strong: rgba(202, 196, 208, 0.22);
+  --inner-specular: inset 0 1px 0 rgba(230, 224, 233, 0.08);
+
+  --ink-primary: #e6e0e9;
+  --ink-secondary: #cac4d0;
+  --ink-muted: #938f99;
+
+  /* Strictly Semantic Hardware Accents (Material Tonal) */
+  --accent-actuate: #d0bcff;
+  --accent-actuate-glow: rgba(208, 188, 255, 0.34);
+  --accent-connected: #81c995;
+  --accent-sim: #fdd663;
+  --accent-rx: #8ab4f8;
+
+  /* Spring Easing */
+  --spring: cubic-bezier(0.22, 1, 0.36, 1);
+  --spring-snappy: cubic-bezier(0.32, 0.72, 0, 1);
+
+  /* ========================================================================
+     1. Shogun Lacquer (Preserved Keyboard Edition Tokens)
+     ======================================================================== */
+  --stage-bg: #141212;
+  --stage-radial: rgba(212, 162, 74, 0.13);
+  --case-top: #171519;
+  --case-wall-front: #0e0c10;
+  --case-wall-side: #121014;
+  --case-plate: #0a090b;
+  --case-chamfer: rgba(219, 176, 86, 0.36);
+  --case-drop: rgba(0, 0, 0, 0.72);
+
+  --key-face-a: #efe6d5;
+  --key-face-b: #e1d4be;
+  --key-wall-front: #bfb097;
+  --key-wall-side: #a99a82;
+  --key-char: #1a1715;
+  --key-sub: rgba(154, 48, 36, 0.82);
+
+  --mod-face-a: #1d2738;
+  --mod-face-b: #141c29;
+  --mod-wall-front: #0d131d;
+  --mod-wall-side: #090e16;
+  --mod-char: #e7c270;
+
+  --accent-face-a: #bc3427;
+  --accent-face-b: #9b251b;
+  --accent-wall-front: #781a12;
+  --accent-wall-side: #5e130d;
+  --accent-char: #fbf3e4;
+
+  /* Dynamic 3D Keyboard Geometry (updated by ../js/app.js per layout) */
+  --u: 44px;
+  --gap: 5px;
+  --pad: 18px;
+  --key-h: 11px;
+  --key-press: 3px;
+  --case-h: 20px;
+  --kb-scale: 1;
+  --kb-rot-x: 48deg;
+  --kb-rot-z: -18deg;
+}
+
+/* ==========================================================================
+   2. Imperial Lantern
+   ========================================================================== */
+[data-theme="festival"] {
+  --stage-bg: #161011;
+  --stage-radial: rgba(196, 36, 43, 0.22);
+  --surface-dock: rgba(34, 22, 24, 0.88);
+  --surface-well: #1c1214;
+  --surface-elevated: #362225;
+  --surface-hover: #452b2f;
+  --accent-actuate: #ffb77c;
+  --accent-actuate-glow: rgba(255, 183, 124, 0.34);
+  --case-top: #5c1014;
+  --case-wall-front: #3b080b;
+  --case-wall-side: #290507;
+  --case-plate: #c49235;
+  --case-chamfer: rgba(248, 208, 118, 0.28);
+
+  --key-face-a: #f7efe0;
+  --key-face-b: #eae0cb;
+  --key-wall-front: #cec0a6;
+  --key-wall-side: #b6a78c;
+  --key-char: #7a1217;
+  --key-sub: rgba(122, 18, 23, 0.62);
+
+  --mod-face-a: #9e181e;
+  --mod-face-b: #821116;
+  --mod-wall-front: #590a0d;
+  --mod-wall-side: #420609;
+  --mod-char: #fce18d;
+
+  --accent-face-a: #ebb94b;
+  --accent-face-b: #d49c2e;
+  --accent-wall-front: #9c6f19;
+  --accent-wall-side: #7a5510;
+  --accent-char: #2b080a;
+}
+
+/* ==========================================================================
+   3. Dusk Horizon
+   ========================================================================== */
+[data-theme="horizon"] {
+  --stage-bg: #14111b;
+  --stage-radial: rgba(255, 138, 91, 0.16);
+  --surface-dock: rgba(31, 26, 42, 0.88);
+  --surface-well: #1a1524;
+  --surface-elevated: #332a44;
+  --surface-hover: #403554;
+  --accent-actuate: #ffb599;
+  --accent-actuate-glow: rgba(255, 181, 153, 0.34);
+  --case-top: #271f36;
+  --case-wall-front: #1a1426;
+  --case-wall-side: #20182e;
+  --case-plate: #151020;
+  --case-chamfer: rgba(255, 198, 165, 0.24);
+
+  --key-face-a: #fdf1e6;
+  --key-face-b: #f2dcca;
+  --key-wall-front: #cfa992;
+  --key-wall-side: #dfbda8;
+  --key-char: #2e1f3a;
+  --key-sub: rgba(110, 62, 92, 0.78);
+
+  --mod-face-a: #56385c;
+  --mod-face-b: #432a49;
+  --mod-wall-front: #2a1930;
+  --mod-wall-side: #36213c;
+  --mod-char: #ffdfc2;
+
+  --accent-face-a: #f59256;
+  --accent-face-b: #e37242;
+  --accent-wall-front: #a64324;
+  --accent-wall-side: #c25530;
+  --accent-char: #211229;
+}
+
+/* ==========================================================================
+   4. Midnight Stealth
+   ========================================================================== */
+[data-theme="midnight"] {
+  --stage-bg: #0e1016;
+  --stage-radial: rgba(79, 107, 255, 0.14);
+  --surface-dock: rgba(23, 27, 36, 0.88);
+  --surface-well: #12151e;
+  --surface-elevated: #262c3b;
+  --surface-hover: #30374a;
+  --accent-actuate: #a8c7fa;
+  --accent-actuate-glow: rgba(168, 199, 250, 0.34);
+  --case-top: #111318;
+  --case-wall-front: #0a0b0f;
+  --case-wall-side: #06070a;
+  --case-plate: #050608;
+  --case-chamfer: rgba(148, 163, 196, 0.14);
+
+  --key-face-a: #1c1f26;
+  --key-face-b: #15171d;
+  --key-wall-front: #0e1014;
+  --key-wall-side: #090a0d;
+  --key-char: #b8c2d6;
+  --key-sub: rgba(184, 194, 214, 0.58);
+
+  --mod-face-a: #14161c;
+  --mod-face-b: #0f1116;
+  --mod-wall-front: #090a0e;
+  --mod-wall-side: #050609;
+  --mod-char: #8f9bb3;
+
+  --accent-face-a: #222838;
+  --accent-face-b: #171b27;
+  --accent-wall-front: #0f121b;
+  --accent-wall-side: #090b11;
+  --accent-char: #e2e8f5;
+}
+
+/* ==========================================================================
+   5. Velvet Amethyst
+   ========================================================================== */
+[data-theme="velvet"] {
+  --stage-bg: #120d17;
+  --stage-radial: rgba(146, 84, 212, 0.2);
+  --surface-dock: rgba(31, 22, 41, 0.88);
+  --surface-well: #181021;
+  --surface-elevated: #332445;
+  --surface-hover: #412f57;
+  --accent-actuate: #d9baff;
+  --accent-actuate-glow: rgba(217, 186, 255, 0.36);
+  --case-top: #1e132b;
+  --case-wall-front: #140c1e;
+  --case-wall-side: #0e0815;
+  --case-plate: #09050f;
+  --case-chamfer: rgba(196, 164, 240, 0.22);
+
+  --key-face-a: #2d1f3f;
+  --key-face-b: #231733;
+  --key-wall-front: #191026;
+  --key-wall-side: #120b1c;
+  --key-char: #f0e6fa;
+  --key-sub: rgba(210, 185, 240, 0.58);
+
+  --mod-face-a: #432863;
+  --mod-face-b: #341e4f;
+  --mod-wall-front: #25143b;
+  --mod-wall-side: #1a0e2b;
+  --mod-char: #f7eeff;
+
+  --accent-face-a: #a61c41;
+  --accent-face-b: #821331;
+  --accent-wall-front: #5e0c22;
+  --accent-wall-side: #450818;
+  --accent-char: #fff0f5;
+}
+
+/* ==========================================================================
+   Reset & Base
+   ========================================================================== */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-size: 12px;
+  color: var(--ink-primary);
+  background: var(--stage-bg);
+  -webkit-font-smoothing: antialiased;
+  user-select: none;
+}
+
+.mono {
+  font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, monospace;
+  font-variant-numeric: tabular-nums;
+}
+
+.sr-only-control {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+button, input, select {
+  font-family: inherit;
+  color: inherit;
+}
+
+button:active:not(:disabled) {
+  transform: scale(0.97);
+}
+
+/* ==========================================================================
+   Field Shell & Infinite Drafting Stage
+   ========================================================================== */
+.field-shell {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  background: var(--stage-bg);
+  transition: background 0.45s ease;
+}
+
+.stage {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* Architectural Matte Drafting Mat Micro-Dot Grid */
+.stage-bg-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(ellipse 56% 52% at 50% 47%, var(--stage-radial), transparent 72%),
+    radial-gradient(var(--bg-canvas-dot) 1px, transparent 1px);
+  background-size: 100% 100%, 26px 26px;
+  background-position: center center, 13px 13px;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+}
+
+/* Graceful vertical lift when bottom dock expands */
+.keyboard-viewport {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  perspective: 2600px;
+  pointer-events: none;
+  transform: translateY(-10px);
+  transition: transform 0.5s var(--spring);
+}
+
+.field-shell[data-dock="rgb"] .keyboard-viewport,
+.field-shell[data-dock="webhid"] .keyboard-viewport,
+.field-shell[data-dock="keymap"] .keyboard-viewport {
+  transform: translateY(-76px) scale(0.92);
+}
+
+.field-shell[data-dock="paint"] .keyboard-viewport {
+  transform: translateY(-24px);
+}
+
+.keyboard-camera {
+  transform: scale(var(--kb-scale));
+  transform-style: preserve-3d;
+  transition: transform 0.38s var(--spring);
+  pointer-events: none;
+}
+
+/* ==========================================================================
+   LAYER A: Top Whisper Strip (Zero bar, zero box, pure floating precision)
+   ========================================================================== */
+.whisper-bar {
+  position: fixed;
+  top: 20px;
+  left: 24px;
+  right: 24px;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 40;
+  pointer-events: none;
+}
+
+.whisper-left,
+.whisper-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  pointer-events: auto;
+}
+
+.wordmark {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding-right: 4px;
+}
+
+.wordmark-logo {
+  width: 28px;
+  height: 28px;
+  color: var(--ink-primary);
+  flex-shrink: 0;
+  display: block;
+}
+
+.wordmark-pip {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--accent-actuate);
+  box-shadow: 0 0 10px var(--accent-actuate-glow);
+}
+
+.wordmark-name {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  color: var(--ink-primary);
+}
+
+.hairline-sep {
+  width: 1px;
+  height: 14px;
+  background: var(--hairline-strong);
+}
+
+.hairline-sep-sm {
+  width: 1px;
+  height: 14px;
+  background: var(--hairline);
+  flex-shrink: 0;
+}
+
+/* Layout Morph-Pill (Expand on Hover — mirrors Edition Fan) */
+.layout-rail {
+  display: inline-flex;
+  align-items: center;
+  gap: 0;
+  padding: 2px;
+  border-radius: 999px;
+  background: var(--surface-dock);
+  backdrop-filter: blur(14px);
+  border: 1px solid var(--hairline);
+  box-shadow: var(--inner-specular);
+  transition: gap 0.32s var(--spring), border-color 0.2s ease;
+}
+
+.layout-rail:hover,
+.layout-rail:focus-within {
+  gap: 2px;
+  border-color: var(--hairline-strong);
+}
+
+.layout-rail .seg-btn {
+  border: none;
+  background: transparent;
+  color: var(--ink-secondary);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  padding: 5px 11px;
+  border-radius: 999px;
+  cursor: pointer;
+  overflow: hidden;
+  max-width: 110px;
+  transition:
+    max-width 0.36s var(--spring),
+    padding 0.34s var(--spring),
+    opacity 0.22s ease,
+    color 0.18s ease,
+    background 0.22s var(--spring),
+    transform 0.1s ease;
+  white-space: nowrap;
+}
+
+.layout-rail .seg-btn:not(.active) {
+  max-width: 0;
+  padding-left: 0;
+  padding-right: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.layout-rail:hover .seg-btn:not(.active),
+.layout-rail:focus-within .seg-btn:not(.active) {
+  max-width: 110px;
+  padding-left: 11px;
+  padding-right: 11px;
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.layout-rail .seg-btn:hover {
+  color: var(--ink-primary);
+}
+
+.layout-rail .seg-btn.active {
+  background: var(--surface-elevated);
+  color: var(--ink-primary);
+  font-weight: 600;
+  box-shadow: var(--inner-specular);
+}
+
+/* Expanding 5-Edition Ceramic Swatch Fan */
+.edition-fan {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  height: 30px;
+  padding: 2px;
+  border-radius: 999px;
+  background: rgba(24, 24, 22, 0.65);
+  backdrop-filter: blur(14px);
+  border: 1px solid var(--hairline);
+  box-shadow: var(--inner-specular);
+  transition: border-color 0.2s ease;
+}
+
+.edition-fan:hover,
+.edition-fan.open {
+  border-color: var(--hairline-strong);
+}
+
+.edition-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  height: 24px;
+  padding: 0 9px 0 5px;
+  border: none;
+  border-radius: 999px;
+  background: transparent;
+  cursor: pointer;
+  color: var(--ink-secondary);
+  font-size: 11px;
+  font-weight: 500;
+  transition: color 0.15s ease;
+}
+
+.edition-trigger:hover {
+  color: var(--ink-primary);
+}
+
+.edition-tray {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  max-width: 0;
+  opacity: 0;
+  overflow: hidden;
+  padding-right: 0;
+  transition: max-width 0.36s var(--spring), opacity 0.22s ease, padding 0.3s var(--spring);
+}
+
+.edition-fan.open .edition-tray,
+.edition-fan:hover .edition-tray {
+  max-width: 140px;
+  opacity: 1;
+  padding-right: 5px;
+}
+
+.swatch-btn {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 1px solid transparent;
+  background: transparent;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: border-color 0.16s ease, transform 0.16s var(--spring);
+}
+
+.swatch-btn:hover {
+  transform: scale(1.14);
+}
+
+.swatch-btn.active {
+  border-color: var(--ink-primary);
+}
+
+.ceramic-dot {
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  display: block;
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.28), 0 1px 3px rgba(0, 0, 0, 0.5);
+  background: linear-gradient(135deg, #efe6d5 50%, #bc3427 50%);
+}
+
+.swatch-edo      { background: linear-gradient(135deg, #efe6d5 50%, #bc3427 50%); }
+.swatch-festival { background: linear-gradient(135deg, #9e181e 50%, #ebb94b 50%); }
+.swatch-horizon  { background: linear-gradient(135deg, #56385c 50%, #f59256 50%); }
+.swatch-midnight { background: linear-gradient(135deg, #1c1f26 50%, #4f6bff 50%); }
+.swatch-velvet   { background: linear-gradient(135deg, #432863 50%, #a61c41 50%); }
+
+/* 3D / 2D Micro Segmented Switch */
+.micro-seg {
+  display: inline-flex;
+  align-items: center;
+  height: 30px;
+  padding: 2px;
+  border-radius: 999px;
+  background: rgba(24, 24, 22, 0.65);
+  backdrop-filter: blur(14px);
+  border: 1px solid var(--hairline);
+  box-shadow: var(--inner-specular);
+}
+
+.micro-seg .seg-btn {
+  height: 24px;
+  padding: 0 9px;
+  border: none;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--ink-muted);
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.18s var(--spring);
+}
+
+.micro-seg .seg-btn:hover {
+  color: var(--ink-primary);
+}
+
+.micro-seg .seg-btn.active {
+  background: var(--surface-elevated);
+  color: var(--ink-primary);
+  box-shadow: var(--inner-specular);
+}
+
+/* Whisper Pills (Sound & Device Status) */
+.whisper-pill {
+  height: 30px;
+  padding: 0 11px;
+  border-radius: 999px;
+  border: 1px solid var(--hairline);
+  background: rgba(24, 24, 22, 0.65);
+  backdrop-filter: blur(14px);
+  box-shadow: var(--inner-specular);
+  color: var(--ink-secondary);
+  font-size: 11px;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  cursor: pointer;
+  transition: border-color 0.18s ease, color 0.18s ease, background 0.18s ease;
+}
+
+.whisper-pill:hover {
+  border-color: var(--hairline-strong);
+  color: var(--ink-primary);
+  background: rgba(34, 34, 30, 0.8);
+}
+
+/* Acoustic Waveform Bars */
+.sound-wave {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  height: 11px;
+}
+
+.sound-wave i {
+  display: block;
+  width: 1.5px;
+  height: 4px;
+  border-radius: 2px;
+  background: var(--ink-muted);
+  transition: height 0.18s var(--spring), background 0.18s ease;
+}
+
+#sound-toggle.active .sound-wave i {
+  background: var(--ink-primary);
+}
+#sound-toggle.active .sound-wave i:nth-child(1) { height: 5px; }
+#sound-toggle.active .sound-wave i:nth-child(2) { height: 10px; }
+#sound-toggle.active .sound-wave i:nth-child(3) { height: 6px; }
+#sound-toggle.active.key-pulse .sound-wave i:nth-child(2) {
+  height: 12px;
+  background: var(--accent-actuate);
+}
+
+/* Status Pill LED */
+.status-pill .status-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--ink-muted);
+  transition: background 0.2s ease, box-shadow 0.2s ease;
+}
+
+.status-pill.connected .status-dot {
+  background: var(--accent-connected);
+  box-shadow: 0 0 8px rgba(52, 199, 89, 0.75);
+}
+
+.status-pill.simulated .status-dot {
+  background: var(--accent-sim);
+  box-shadow: 0 0 8px rgba(229, 169, 60, 0.7);
+}
+
+/* ==========================================================================
+   Paint Mode Floating Stage Banner
+   ========================================================================== */
+.paint-banner {
+  position: fixed;
+  top: 66px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 12px;
+  border-radius: 999px;
+  background: rgba(22, 22, 20, 0.8);
+  border: 1px solid rgba(255, 77, 0, 0.35);
+  backdrop-filter: blur(12px);
+  color: var(--ink-primary);
+  font-size: 11px;
+  font-weight: 500;
+  z-index: 35;
+  pointer-events: none;
+}
+
+.paint-banner[hidden] {
+  display: none;
+}
+
+.paint-pulse {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent-actuate);
+  box-shadow: 0 0 8px var(--accent-actuate);
+}
+
+/* ==========================================================================
+   LAYER C: Corner Spatial Telemetry (Borderless, Whisper-Quiet)
+   ========================================================================== */
+.corner-telemetry {
+  position: fixed;
+  bottom: 24px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  z-index: 30;
+  opacity: 0.62;
+  transition: opacity 0.25s ease;
+}
+
+.corner-telemetry:hover {
+  opacity: 1;
+}
+
+.field-shell.typing-active .corner-telemetry {
+  opacity: 0.24;
+}
+
+.corner-bl {
+  left: 24px;
+  cursor: pointer;
+}
+
+.corner-br {
+  right: 24px;
+}
+
+.tel-label {
+  font-size: 9.5px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  color: var(--ink-muted);
+}
+
+.tel-val {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--ink-secondary);
+}
+
+.tel-hint {
+  font-size: 10px;
+  color: var(--ink-muted);
+  opacity: 0;
+  transform: translateX(-4px);
+  transition: opacity 0.2s ease, transform 0.2s var(--spring);
+}
+
+.corner-bl:hover .tel-hint,
+.stage.orbiting .corner-bl .tel-hint {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.scrubbable {
+  cursor: ew-resize;
+  padding: 2px 4px;
+  border-radius: 4px;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.scrubbable:hover,
+.scrubbable.scrubbing {
+  background: rgba(237, 235, 230, 0.08);
+  color: var(--ink-primary);
+}
+
+.vernier-step {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--ink-muted);
+  font-size: 13px;
+  line-height: 1;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  transition: color 0.15s ease, border-color 0.15s ease, background 0.15s ease;
+}
+
+.vernier-step:hover {
+  color: var(--ink-primary);
+  border-color: var(--hairline);
+  background: rgba(237, 235, 230, 0.05);
+}
+
+.vernier-track {
+  width: 0;
+  opacity: 0;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  transition: width 0.28s var(--spring), opacity 0.2s ease;
+}
+
+.corner-br:hover .vernier-track,
+.corner-br:focus-within .vernier-track {
+  width: 68px;
+  opacity: 1;
+}
+
+#zoom-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 68px;
+  height: 2px;
+  background: var(--hairline-strong);
+  border-radius: 2px;
+  outline: none;
+  cursor: pointer;
+}
+
+#zoom-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 8px;
+  height: 12px;
+  border-radius: 2px;
+  background: var(--ink-primary);
+  cursor: ew-resize;
+}
+
+/* ==========================================================================
+   LAYER B: Morphing Magnetic Bottom Dock
+   ========================================================================== */
+.magnetic-dock {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(560px, calc(100vw - 340px));
+  min-width: 440px;
+  z-index: 45;
+  display: flex;
+  flex-direction: column;
+  border-radius: 22px;
+  background: var(--surface-dock);
+  backdrop-filter: blur(24px) saturate(125%);
+  border: 1px solid var(--hairline-strong);
+  box-shadow:
+    var(--inner-specular),
+    0 24px 64px rgba(0, 0, 0, 0.56),
+    0 4px 16px rgba(0, 0, 0, 0.34);
+  transition:
+    width 0.44s var(--spring),
+    border-radius 0.4s var(--spring),
+    border-color 0.25s ease;
+}
+
+.field-shell[data-dock="rgb"] .magnetic-dock,
+.field-shell[data-dock="webhid"] .magnetic-dock,
+.field-shell[data-dock="keymap"] .magnetic-dock {
+  width: min(860px, calc(100vw - 48px));
+  border-radius: 18px;
+}
+
+.field-shell[data-dock="paint"] .magnetic-dock {
+  width: min(580px, calc(100vw - 48px));
+  border-radius: 20px;
+  border-color: rgba(255, 77, 0, 0.32);
+}
+
+/* Smooth Grid-Row Height Morph for Expandable Console Drawer */
+.dock-drawer {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  transition:
+    grid-template-rows 0.42s var(--spring),
+    opacity 0.28s ease;
+}
+
+.field-shell[data-dock="rgb"] .dock-drawer,
+.field-shell[data-dock="webhid"] .dock-drawer,
+.field-shell[data-dock="keymap"] .dock-drawer {
+  grid-template-rows: 1fr;
+  opacity: 1;
+}
+
+.dock-drawer-inner {
+  overflow: hidden;
+}
+
+.tab-content {
+  display: none;
+  padding: 12px 16px 14px;
+  border-bottom: 1px solid var(--hairline);
+}
+
+.tab-content.active {
+  display: block;
+}
+
+/* Top Micro-Rail inside Console */
+.console-rail {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+  border-bottom: 1px solid var(--hairline);
+}
+
+.rail-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.rail-actions {
+  flex-shrink: 0;
+}
+
+.micro-label {
+  font-size: 9.5px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  color: var(--ink-muted);
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.mode-readout {
+  font-size: 10.5px;
+  color: var(--ink-secondary);
+}
+
+.micro-link {
+  border: none;
+  background: transparent;
+  color: var(--ink-secondary);
+  font-size: 11px;
+  font-weight: 500;
+  padding: 3px 6px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: color 0.15s ease, background 0.15s ease;
+}
+
+.micro-link:hover {
+  color: var(--ink-primary);
+  background: rgba(237, 235, 230, 0.06);
+}
+
+/* Quick Presets Strip */
+.preset-strip {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.preset-strip::-webkit-scrollbar {
+  display: none;
+}
+
+.preset-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 24px;
+  padding: 0 9px 0 6px;
+  border-radius: 999px;
+  border: 1px solid var(--hairline);
+  background: var(--surface-well);
+  color: var(--ink-secondary);
+  font-size: 10.5px;
+  font-weight: 500;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.16s ease;
+}
+
+.preset-btn:hover {
+  border-color: var(--hairline-strong);
+  color: var(--ink-primary);
+  background: var(--surface-elevated);
+}
+
+.preset-swatch {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.25);
+}
+
+/* ==========================================================================
+   RGB STUDIO HORIZONTAL BRAUN DECK
+   ========================================================================== */
+.rgb-deck {
+  display: grid;
+  grid-template-columns: 1.35fr 1.25fr 0.85fr;
+  gap: 16px;
+  align-items: stretch;
+}
+
+.deck-zone {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  min-width: 0;
+}
+
+/* Zone 1: 9 Lighting Modes (3×3 compact tactile detent pad) */
+.mode-strip {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 4px;
+}
+
+.mode-card {
+  height: 27px;
+  padding: 0 8px;
+  border-radius: 7px;
+  border: 1px solid var(--hairline);
+  background: var(--surface-well);
+  color: var(--ink-secondary);
+  font-size: 11px;
+  font-weight: 500;
+  cursor: pointer;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: all 0.16s var(--spring);
+}
+
+.mode-card:hover {
+  border-color: var(--hairline-strong);
+  color: var(--ink-primary);
+  background: var(--surface-elevated);
+}
+
+.mode-card.active {
+  background: var(--ink-primary);
+  border-color: var(--ink-primary);
+  color: #111110;
+  font-weight: 600;
+}
+
+/* Zone 2: Braun Linear Faders + Direction Compass */
+.zone-params {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 12px;
+  align-items: stretch;
+}
+
+.fader-stack {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.braun-fader {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.fader-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.fader-val {
+  font-size: 11px;
+  color: var(--ink-primary);
+}
+
+.fader-track {
+  position: relative;
+  height: 22px;
+  border-radius: 6px;
+  background: var(--surface-well);
+  border: 1px solid var(--hairline);
+  overflow: hidden;
+}
+
+/* Center 50% hardware detent tick */
+.fader-track::after {
+  content: "";
+  position: absolute;
+  top: 4px;
+  bottom: 4px;
+  left: 50%;
+  width: 1px;
+  background: rgba(237, 235, 230, 0.08);
+  pointer-events: none;
+}
+
+.fader-fill {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 50%;
+  background: rgba(237, 235, 230, 0.13);
+  pointer-events: none;
+}
+
+.fader-needle {
+  position: absolute;
+  top: 3px;
+  bottom: 3px;
+  left: 50%;
+  width: 2px;
+  border-radius: 1px;
+  background: var(--ink-primary);
+  transform: translateX(-1px);
+  pointer-events: none;
+  transition: background 0.15s ease;
+}
+
+.braun-fader:hover .fader-needle,
+.braun-fader.dragging .fader-needle {
+  background: var(--accent-actuate);
+  box-shadow: 0 0 8px var(--accent-actuate-glow);
+}
+
+.fader-track input[type="range"] {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: ew-resize;
+  z-index: 2;
+}
+
+/* Direction Compass Dial */
+.direction-module {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 6px;
+}
+
+.compass-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.compass-dial {
+  position: relative;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid var(--hairline-strong);
+  background: var(--surface-well);
+  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.45);
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  transition: border-color 0.2s ease;
+}
+
+.compass-dial:hover {
+  border-color: var(--ink-secondary);
+}
+
+.compass-ring {
+  position: absolute;
+  inset: 5px;
+  border-radius: 50%;
+  border: 1px dashed rgba(237, 235, 230, 0.14);
+}
+
+.compass-needle {
+  position: absolute;
+  width: 2px;
+  height: 16px;
+  bottom: 50%;
+  left: calc(50% - 1px);
+  transform-origin: bottom center;
+  background: var(--accent-actuate);
+  border-radius: 2px;
+  box-shadow: 0 0 6px var(--accent-actuate-glow);
+  transition: transform 0.32s var(--spring), opacity 0.2s ease;
+}
+
+.compass-dial.is-radial .compass-needle {
+  opacity: 0;
+}
+
+.compass-core {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--ink-primary);
+  z-index: 2;
+  transition: transform 0.25s var(--spring), background 0.2s ease;
+}
+
+.compass-dial.is-radial .compass-core {
+  background: var(--accent-actuate);
+  transform: scale(1.6);
+  box-shadow: 0 0 0 4px rgba(255, 77, 0, 0.2);
+}
+
+.dir-pills {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2px;
+  padding: 2px;
+  border-radius: 7px;
+  background: var(--surface-well);
+  border: 1px solid var(--hairline);
+}
+
+.dir-pills .seg-btn {
+  width: 22px;
+  height: 20px;
+  border: none;
+  border-radius: 5px;
+  background: transparent;
+  color: var(--ink-muted);
+  font-size: 11px;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  transition: all 0.15s ease;
+}
+
+.dir-pills .seg-btn:hover {
+  color: var(--ink-primary);
+}
+
+.dir-pills .seg-btn.active {
+  background: var(--surface-elevated);
+  color: var(--ink-primary);
+}
+
+/* Zone 3: Ceramic Color Wells & Detent Rockers */
+.zone-chroma {
+  justify-content: space-between;
+  border-left: 1px solid var(--hairline);
+  padding-left: 14px;
+}
+
+.chroma-wells {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.well-pair {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ceramic-well {
+  position: relative;
+  flex: 1;
+  height: 30px;
+  padding: 0 8px;
+  border-radius: 8px;
+  border: 1px solid var(--hairline);
+  background: var(--surface-well);
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  cursor: pointer;
+  transition: border-color 0.16s ease;
+}
+
+.ceramic-well:hover {
+  border-color: var(--hairline-strong);
+}
+
+.ceramic-well input[type="color"] {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+  width: 100%;
+  height: 100%;
+}
+
+.well-swatch {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #e2b14c;
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.14);
+  flex-shrink: 0;
+}
+
+.well-tag {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: var(--ink-secondary);
+}
+
+/* Machined Braun Detent Rocker Switches */
+.rocker-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.rocker-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.rocker-label {
+  font-size: 11px;
+  color: var(--ink-secondary);
+  transition: color 0.15s ease;
+}
+
+.rocker-row:hover .rocker-label {
+  color: var(--ink-primary);
+}
+
+.rocker-input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.rocker-track {
+  position: relative;
+  width: 30px;
+  height: 16px;
+  border-radius: 999px;
+  background: var(--surface-well);
+  border: 1px solid var(--hairline-strong);
+  transition: background 0.2s ease, border-color 0.2s ease;
+  flex-shrink: 0;
+}
+
+.rocker-thumb {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--ink-muted);
+  transition: transform 0.24s var(--spring), background 0.2s ease;
+}
+
+.rocker-input:checked + .rocker-track {
+  background: rgba(237, 235, 230, 0.14);
+  border-color: rgba(237, 235, 230, 0.35);
+}
+
+.rocker-input:checked + .rocker-track .rocker-thumb {
+  transform: translateX(14px);
+  background: var(--ink-primary);
+}
+
+/* ==========================================================================
+   COLLAPSED PER-KEY PAINT BAR (Auto-surfaces on custom mode)
+   ========================================================================== */
+.paint-dock-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 8px 14px;
+  border-bottom: 1px solid var(--hairline);
+}
+
+.paint-dock-bar[hidden] {
+  display: none;
+}
+
+.paint-bar-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  color: var(--ink-secondary);
+}
+
+.paint-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent-actuate);
+}
+
+.brush-well {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  height: 26px;
+  padding: 0 9px 0 6px;
+  border-radius: 999px;
+  border: 1px solid var(--hairline-strong);
+  background: var(--surface-well);
+  cursor: pointer;
+}
+
+.brush-well input[type="color"] {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+  width: 100%;
+  height: 100%;
+}
+
+.brush-swatch {
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: #38bdf8;
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.35);
+}
+
+.brush-hex {
+  font-size: 10.5px;
+  color: var(--ink-primary);
+}
+
+.paint-action {
+  height: 26px;
+  padding: 0 10px;
+  border-radius: 999px;
+  border: 1px solid var(--hairline);
+  background: var(--surface-well);
+  color: var(--ink-secondary);
+  font-size: 11px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.paint-action:hover {
+  border-color: var(--hairline-strong);
+  color: var(--ink-primary);
+  background: var(--surface-elevated);
+}
+
+.paint-expand-btn {
+  color: var(--ink-primary);
+  background: rgba(237, 235, 230, 0.08);
+}
+
+/* ==========================================================================
+   WEBHID HARDWARE PATCHBAY DECK
+   ========================================================================== */
+.support-tag {
+  font-size: 10px;
+  padding: 2px 7px;
+  border-radius: 999px;
+  background: var(--surface-well);
+  border: 1px solid var(--hairline);
+  color: var(--ink-secondary);
+}
+
+.hid-deck {
+  display: grid;
+  grid-template-columns: 1fr 1.05fr 1.25fr;
+  gap: 14px;
+  align-items: stretch;
+}
+
+.hid-col {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+}
+
+.hid-col-proto,
+.hid-col-bus {
+  border-left: 1px solid var(--hairline);
+  padding-left: 14px;
+}
+
+/* Etched Spec Plate */
+.spec-plate {
+  padding: 8px 10px;
+  border-radius: 8px;
+  background: var(--surface-well);
+  border: 1px solid var(--hairline);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.spec-name {
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--ink-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.spec-meta {
+  display: flex;
+  gap: 10px;
+  font-size: 10px;
+  color: var(--ink-muted);
+}
+
+.spec-meta strong {
+  color: var(--ink-secondary);
+  font-weight: 500;
+}
+
+.conn-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5px;
+}
+
+.conn-actions .hw-btn-ghost {
+  grid-column: 1 / -1;
+}
+
+.hw-btn {
+  height: 27px;
+  padding: 0 10px;
+  border-radius: 7px;
+  border: 1px solid var(--hairline-strong);
+  background: var(--surface-elevated);
+  color: var(--ink-primary);
+  font-size: 11px;
+  font-weight: 500;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: all 0.16s ease;
+}
+
+.hw-btn:hover:not(:disabled) {
+  background: var(--surface-hover);
+  border-color: rgba(237, 235, 230, 0.28);
+}
+
+.hw-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.hw-btn-solid {
+  background: var(--ink-primary);
+  border-color: var(--ink-primary);
+  color: #111110;
+  font-weight: 600;
+}
+
+.hw-btn-solid:hover:not(:disabled) {
+  background: #ffffff;
+  border-color: #ffffff;
+}
+
+.hw-btn-ghost {
+  background: transparent;
+  border-color: var(--hairline);
+  color: var(--ink-secondary);
+}
+
+.hw-btn-actuate {
+  background: var(--accent-actuate);
+  border-color: var(--accent-actuate);
+  color: #ffffff;
+  font-weight: 600;
+  padding: 0 12px;
+  box-shadow: 0 2px 12px var(--accent-actuate-glow);
+}
+
+.hw-btn-actuate:hover {
+  background: #ff5e1a;
+  border-color: #ff5e1a;
+}
+
+.actuate-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #ffffff;
+}
+
+/* Protocol Registers */
+.reg-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+}
+
+.reg-wide {
+  grid-column: 1 / -1;
+}
+
+.reg-field {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.hw-select,
+.hw-input {
+  height: 26px;
+  padding: 0 8px;
+  border-radius: 6px;
+  border: 1px solid var(--hairline);
+  background: var(--surface-well);
+  color: var(--ink-primary);
+  font-size: 11px;
+  outline: none;
+  transition: border-color 0.15s ease;
+}
+
+.hw-select:focus,
+.hw-input:focus {
+  border-color: var(--hairline-strong);
+}
+
+.hw-select option {
+  background: #191917;
+  color: #edebe6;
+}
+
+.sync-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: auto;
+}
+
+/* Raw Hex Bar & Live Packet Bus */
+.hex-bar {
+  display: flex;
+  align-items: center;
+  height: 26px;
+  padding: 0 3px 0 8px;
+  border-radius: 6px;
+  border: 1px solid var(--hairline);
+  background: var(--surface-well);
+  gap: 6px;
+}
+
+.hex-prefix {
+  font-size: 10px;
+  color: var(--accent-actuate);
+  font-weight: 600;
+}
+
+.hex-input {
+  flex: 1;
+  min-width: 0;
+  border: none;
+  background: transparent;
+  color: var(--ink-primary);
+  font-size: 10.5px;
+  outline: none;
+}
+
+.hex-send-btn {
+  height: 20px;
+  padding: 0 8px;
+  border-radius: 4px;
+  border: none;
+  background: var(--surface-elevated);
+  color: var(--ink-primary);
+  font-size: 10px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.hex-send-btn:hover {
+  background: var(--ink-primary);
+  color: #111110;
+}
+
+.hid-console {
+  height: 82px;
+  overflow-y: auto;
+  padding: 6px 8px;
+  border-radius: 7px;
+  background: #131311;
+  border: 1px solid var(--hairline);
+  font-size: 10px;
+  line-height: 1.5;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  transition: height 0.3s var(--spring);
+}
+
+.hid-console.expanded {
+  height: 190px;
+}
+
+.hid-console::-webkit-scrollbar {
+  width: 4px;
+}
+.hid-console::-webkit-scrollbar-thumb {
+  background: var(--hairline-strong);
+  border-radius: 4px;
+}
+
+.log-empty {
+  color: var(--ink-muted);
+  font-style: italic;
+}
+
+.log-line {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 5px;
+  color: var(--ink-secondary);
+}
+
+.log-dir {
+  font-weight: 600;
+  font-size: 9.5px;
+  padding: 0 4px;
+  border-radius: 3px;
+}
+
+.log-dir.TX {
+  color: var(--accent-connected);
+  background: rgba(52, 199, 89, 0.12);
+}
+
+.log-dir.RX {
+  color: var(--accent-rx);
+  background: rgba(110, 168, 254, 0.12);
+}
+
+.log-dir.SYS {
+  color: var(--accent-sim);
+  background: rgba(229, 169, 60, 0.12);
+}
+
+.log-hex {
+  color: var(--ink-muted);
+  font-size: 9.5px;
+  word-break: break-all;
+}
+
+/* ==========================================================================
+   PERSISTENT BOTTOM PILL RAIL (Always visible, 44px)
+   ========================================================================== */
+.dock-rail {
+  height: 44px;
+  padding: 0 8px 0 6px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.dock-tabs {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  flex-shrink: 0;
+}
+
+.dock-tab {
+  height: 32px;
+  padding: 0 12px;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--ink-secondary);
+  font-size: 11.5px;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  transition: all 0.2s var(--spring);
+}
+
+.dock-tab:hover {
+  color: var(--ink-primary);
+  background: rgba(237, 235, 230, 0.06);
+}
+
+.field-shell[data-dock="rgb"] .dock-tab[data-tab="rgb"],
+.field-shell[data-dock="paint"] .dock-tab[data-tab="rgb"],
+.field-shell[data-dock="webhid"] .dock-tab[data-tab="webhid"],
+.field-shell[data-dock="keymap"] .dock-tab[data-tab="keymap"] {
+  background: var(--surface-elevated);
+  color: var(--ink-primary);
+  font-weight: 600;
+  box-shadow: var(--inner-specular);
+}
+
+.tab-glyph {
+  font-size: 12px;
+  line-height: 1;
+}
+
+/* Click-to-Type Output Tape */
+.typing-tape {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 4px;
+  transition: opacity 0.4s ease;
+}
+
+.typing-tape.idle {
+  opacity: 0.42;
+}
+
+.typing-screen {
+  flex: 1;
+  min-width: 0;
+  height: 24px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  white-space: pre;
+  font-size: 12px;
+  color: var(--ink-primary);
+  display: flex;
+  align-items: center;
+  scrollbar-width: none;
+}
+
+.typing-screen::-webkit-scrollbar {
+  display: none;
+}
+
+.typing-caret {
+  display: inline-block;
+  width: 1.5px;
+  height: 13px;
+  margin-left: 1px;
+  background: var(--accent-actuate);
+  animation: caret-blink 1.05s steps(1) infinite;
+}
+
+@keyframes caret-blink {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+
+.mod-pill {
+  font-size: 10px;
+  font-weight: 600;
+  padding: 1px 5px;
+  border-radius: 4px;
+  background: rgba(255, 77, 0, 0.18);
+  color: var(--accent-actuate);
+}
+
+.mod-pill[hidden] {
+  display: none;
+}
+
+.tape-clear {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: none;
+  background: transparent;
+  color: var(--ink-muted);
+  font-size: 14px;
+  line-height: 1;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  transition: color 0.15s ease, background 0.15s ease;
+}
+
+.tape-clear:hover {
+  color: var(--ink-primary);
+  background: rgba(237, 235, 230, 0.08);
+}
+
+/* Last Key Badge */
+.last-key-badge {
+  flex-shrink: 0;
+  padding: 4px 9px;
+  border-radius: 999px;
+  background: var(--surface-well);
+  border: 1px solid var(--hairline);
+  max-width: 112px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.last-key-badge code {
+  font-size: 10.5px;
+  color: var(--ink-secondary);
+}
+
+/* Collapse Handle */
+.dock-collapse-btn {
+  width: 0;
+  opacity: 0;
+  overflow: hidden;
+  height: 26px;
+  border-radius: 999px;
+  border: none;
+  background: transparent;
+  color: var(--ink-secondary);
+  font-size: 12px;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  transition: width 0.25s var(--spring), opacity 0.2s ease, background 0.15s ease;
+}
+
+.field-shell[data-dock="rgb"] .dock-collapse-btn,
+.field-shell[data-dock="webhid"] .dock-collapse-btn,
+.field-shell[data-dock="keymap"] .dock-collapse-btn {
+  width: 26px;
+  opacity: 1;
+}
+
+/* Language / Keymap Selector Grid */
+.keymap-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 7px;
+  padding-top: 2px;
+}
+
+.keymap-card {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 11px;
+  border-radius: 10px;
+  border: 1px solid var(--hairline);
+  background: var(--surface-well);
+  color: var(--ink-secondary);
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.16s ease, border-color 0.16s ease, color 0.16s ease;
+}
+
+.keymap-card:hover {
+  background: var(--surface-hover);
+  border-color: var(--hairline-strong);
+  color: var(--ink-primary);
+}
+
+.keymap-card.active {
+  background: var(--surface-elevated);
+  border-color: var(--accent-actuate);
+  color: var(--ink-primary);
+  box-shadow: var(--inner-specular);
+}
+
+.keymap-tag {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 5px;
+  background: var(--surface-hover);
+  color: var(--ink-secondary);
+  flex-shrink: 0;
+}
+
+.keymap-card.active .keymap-tag {
+  background: var(--accent-actuate);
+  color: #141218;
+}
+
+.keymap-name {
+  font-size: 11.5px;
+  font-weight: 600;
+  flex: 1;
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.keymap-short {
+  font-size: 10px;
+  color: var(--ink-muted);
+  flex-shrink: 0;
+}
+
+.dock-collapse-btn:hover {
+  background: rgba(237, 235, 230, 0.08);
+  color: var(--ink-primary);
+}
+
+/* ==========================================================================
+   PRESERVED FINALIZED 3D MECHANICAL KEYBOARD GEOMETRY
+   ========================================================================== */
+
+.keyboard {
+  --underglow-rgb: 226, 177, 76;
+  --underglow-alpha: 0.4;
+
+  position: relative;
+  padding: var(--pad);
+  border-radius: 8px;
+  background: var(--case-top);
+  transform: rotateX(var(--kb-rot-x)) rotateZ(var(--kb-rot-z));
+  transform-style: preserve-3d;
+  box-shadow: inset 0 0 0 1.5px var(--case-chamfer);
+  transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.4s ease;
+  user-select: none;
+  pointer-events: auto;
+}
+
+.stage.orbiting {
+  cursor: grabbing;
+}
+
+.stage.orbiting .keyboard,
+.stage.orbiting .keyboard-underglow {
+  transition: none;
+}
+
+.stage.view-flat .keyboard {
+  transform: rotateX(0deg) rotateZ(0deg);
+  box-shadow:
+    inset 0 0 0 1.5px var(--case-chamfer),
+    0 24px 54px var(--case-drop);
+}
+
+.kb-bottom {
+  position: absolute;
+  inset: 0;
+  border-radius: 8px;
+  background: var(--case-wall-side);
+  transform: translateZ(calc(var(--case-h) * -1));
+  pointer-events: none;
+}
+
+.kb-wall {
+  position: absolute;
+  pointer-events: none;
+  backface-visibility: visible;
+}
+
+.kb-wall-s {
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: var(--case-h);
+  transform-origin: bottom center;
+  transform: rotateX(90deg);
+  background: linear-gradient(180deg, var(--case-wall-side) 0%, var(--case-wall-front) 100%);
+  box-shadow: inset 0 -1px 0 var(--case-chamfer);
+}
+
+.kb-wall-n {
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: var(--case-h);
+  transform-origin: top center;
+  transform: rotateX(-90deg);
+  background: linear-gradient(180deg, var(--case-wall-front) 0%, var(--case-wall-side) 100%);
+  box-shadow: inset 0 1px 0 var(--case-chamfer);
+}
+
+.kb-wall-w {
+  left: 0;
+  top: 0;
+  width: var(--case-h);
+  height: 100%;
+  transform-origin: left center;
+  transform: rotateY(90deg);
+  background: linear-gradient(90deg, var(--case-wall-front) 0%, var(--case-wall-side) 100%);
+  box-shadow: inset 1px 0 0 var(--case-chamfer);
+}
+
+.kb-wall-e {
+  right: 0;
+  top: 0;
+  width: var(--case-h);
+  height: 100%;
+  transform-origin: right center;
+  transform: rotateY(-90deg);
+  background: linear-gradient(90deg, var(--case-wall-side) 0%, var(--case-wall-front) 100%);
+  box-shadow: inset -1px 0 0 var(--case-chamfer);
+}
+
+.kb-status-leds {
+  position: absolute;
+  top: 6px;
+  right: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transform: translateZ(1px);
+  z-index: 6;
+  pointer-events: none;
+}
+
+.kb-led {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.16);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.7);
+  transition: all 0.2s ease;
+}
+
+.kb-led.on {
+  background: #38bdf8;
+  box-shadow: 0 0 6px #38bdf8, 0 0 12px rgba(56, 189, 248, 0.8);
+}
+
+.keyboard-underglow {
+  position: absolute;
+  inset: -16px;
+  border-radius: 18px;
+  pointer-events: none;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(var(--underglow-rgb), var(--underglow-alpha)) 0%,
+    rgba(var(--underglow-rgb), 0) 72%
+  );
+  filter: blur(30px);
+  transform: translateZ(calc(var(--case-h) * -1 - 2px));
+}
+
+.keyboard-shade {
+  position: absolute;
+  inset: -2px;
+  border-radius: 10px;
+  pointer-events: none;
+  background: rgba(0, 0, 0, 0.55);
+  filter: blur(18px);
+  transform: translateZ(calc(var(--case-h) * -1 - 4px));
+}
+
+.stage.view-flat .keyboard-shade {
+  opacity: 0;
+}
+
+.keyboard-plate {
+  position: relative;
+  transform-style: preserve-3d;
+  background: var(--case-plate);
+  border-radius: 5px;
+  box-shadow:
+    inset 0 0 0 1px rgba(0, 0, 0, 0.65),
+    0 0 0 2px rgba(0, 0, 0, 0.35);
+}
+
+.key {
+  --led-rgb: 226, 177, 76;
+  --led-alpha: 0.75;
+
+  position: absolute;
+  cursor: pointer;
+  transform-style: preserve-3d;
+}
+
+.key-led {
+  position: absolute;
+  inset: -2px;
+  border-radius: 5px;
+  pointer-events: none;
+  transform: translateZ(0.5px);
+  background: radial-gradient(
+    circle at 50% 45%,
+    rgba(var(--led-rgb), calc(var(--led-alpha) * 0.95)) 0%,
+    rgba(var(--led-rgb), calc(var(--led-alpha) * 0.42)) 58%,
+    transparent 88%
+  );
+  box-shadow: 0 0 12px rgba(var(--led-rgb), calc(var(--led-alpha) * 0.85));
+}
+
+.key-body {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transform: translateZ(var(--key-h));
+  transition: transform 0.065s ease-out;
+}
+
+.key.active .key-body {
+  transform: translateZ(var(--key-press));
+}
+
+.stage.view-flat .key-body {
+  transform: translateZ(2px);
+}
+
+.stage.view-flat .key.active .key-body {
+  transform: translateZ(0px) scale(0.97);
+}
+
+.kw {
+  position: absolute;
+  pointer-events: none;
+  backface-visibility: visible;
+}
+
+.kw-s {
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: var(--key-h);
+  transform-origin: bottom center;
+  transform: rotateX(90deg);
+  background: var(--key-wall-front);
+  box-shadow: inset 0 -1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.kw-n {
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: var(--key-h);
+  transform-origin: top center;
+  transform: rotateX(-90deg);
+  background: var(--key-wall-side);
+}
+
+.kw-w {
+  left: 0;
+  top: 0;
+  width: var(--key-h);
+  height: 100%;
+  transform-origin: left center;
+  transform: rotateY(90deg);
+  background: var(--key-wall-side);
+}
+
+.kw-e {
+  right: 0;
+  top: 0;
+  width: var(--key-h);
+  height: 100%;
+  transform-origin: right center;
+  transform: rotateY(-90deg);
+  background: var(--key-wall-front);
+}
+
+.key-face {
+  position: absolute;
+  inset: 0;
+  border-radius: 4px;
+  padding: 4px 5px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  background: linear-gradient(155deg, var(--key-face-a) 0%, var(--key-face-b) 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.22),
+    inset 0 -2px 3px rgba(0, 0, 0, 0.18),
+    inset 1px 0 1px rgba(255, 255, 255, 0.1),
+    0 0 0 1px rgba(0, 0, 0, 0.22);
+}
+
+.key.active .key-face {
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.16),
+    inset 0 -1px 2px rgba(0, 0, 0, 0.22),
+    0 0 12px rgba(var(--led-rgb), calc(var(--led-alpha) * 0.9));
+}
+
+.key.accent-mod .key-face {
+  background: linear-gradient(155deg, var(--mod-face-a) 0%, var(--mod-face-b) 100%);
+}
+.key.accent-mod .kw-s,
+.key.accent-mod .kw-e {
+  background: var(--mod-wall-front);
+}
+.key.accent-mod .kw-n,
+.key.accent-mod .kw-w {
+  background: var(--mod-wall-side);
+}
+.key.accent-mod .key-char,
+.key.accent-mod .key-sub {
+  color: var(--mod-char);
+}
+
+.key.accent-orange .key-face {
+  background: linear-gradient(155deg, var(--accent-face-a) 0%, var(--accent-face-b) 100%);
+}
+.key.accent-orange .kw-s,
+.key.accent-orange .kw-e {
+  background: var(--accent-wall-front);
+}
+.key.accent-orange .kw-n,
+.key.accent-orange .kw-w {
+  background: var(--accent-wall-side);
+}
+.key.accent-orange .key-char {
+  color: var(--accent-char);
+}
+
+.key-sub {
+  font-family: 'Space Grotesk', system-ui, sans-serif;
+  font-weight: 600;
+  font-size: calc(var(--u) * 0.19);
+  line-height: 1;
+  color: var(--key-sub);
+  margin-bottom: 1px;
+}
+
+.key-char {
+  font-family: 'Space Grotesk', system-ui, sans-serif;
+  font-weight: 700;
+  font-size: calc(var(--u) * 0.28);
+  line-height: 1.05;
+  letter-spacing: 0.01em;
+  color: var(--key-char);
+  transition: color 0.15s ease, text-shadow 0.15s ease;
+}
+
+.key.label-long .key-char {
+  font-size: calc(var(--u) * 0.205);
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+
+.key-homing {
+  position: absolute;
+  bottom: 3px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 34%;
+  height: 1.8px;
+  border-radius: 2px;
+  background: var(--key-char);
+  opacity: 0.55;
+}
+
+.keyboard.legend-rgb-on .key-char {
+  text-shadow:
+    0 0 6px rgba(var(--led-rgb), calc(var(--led-alpha) * 0.85)),
+    0 0 12px rgba(var(--led-rgb), calc(var(--led-alpha) * 0.42));
+}
+
+/* ==========================================================================
+   Responsive Refinements
+   ========================================================================== */
+@media (max-width: 960px) {
+  .rgb-deck,
+  .hid-deck {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+  .zone-chroma,
+  .hid-col-proto,
+  .hid-col-bus {
+    border-left: none;
+    padding-left: 0;
+    border-top: 1px solid var(--hairline);
+    padding-top: 10px;
+  }
+  .corner-telemetry {
+    display: none;
+  }
+  .magnetic-dock {
+    width: calc(100vw - 24px);
+    min-width: 0;
+  }
+}
+
+/* External Driver Loader (Bring Your Own Driver) */
+.driver-loader-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-top: 6px;
+}
+
+.driver-loader-row .hw-btn {
+  padding: 5px 9px;
+  font-size: 11px;
+}
+
+/* GitHub Repository Pill in Top Whisper Bar */
+.github-link {
+  text-decoration: none;
+  gap: 6px;
+}
+
+.github-link svg {
+  flex-shrink: 0;
+  opacity: 0.9;
+}

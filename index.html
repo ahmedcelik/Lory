@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="edo">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lory · Web Keyboard Driver</title>
+  <link rel="icon" type="image/svg+xml" href="./assets/logo-dark.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <div class="field-shell" id="field-shell" data-dock="rest">
+    <!-- ====================================================================
+         LAYER A: Top Whisper Strip (Borderless floating architectural chrome)
+         ==================================================================== -->
+    <header class="whisper-bar">
+      <div class="whisper-left">
+        <div class="wordmark" title="Lory Web Keyboard Driver">
+          <svg class="wordmark-logo" viewBox="0 0 128 128" width="28" height="28" fill="none" aria-hidden="true">
+            <defs>
+              <linearGradient id="lory-brand-spectrum" x1="24" y1="96" x2="104" y2="32" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stop-color="#00E5FF"/>
+                <stop offset="50%" stop-color="#FFD400"/>
+                <stop offset="100%" stop-color="#FF2AD4"/>
+              </linearGradient>
+            </defs>
+            <rect x="12" y="12" width="104" height="104" rx="26" stroke="currentColor" stroke-width="7"/>
+            <path d="M44 84 V56 C44 40 56 32 70 32 C81 32 88 39 88 49 C88 53 86 56 83 58 C89 60 93 65 92 73 C87 70 82 69 77 70 C74 79 65 84 54 84 H44 Z"
+                  stroke="currentColor" stroke-width="7" stroke-linejoin="round" stroke-linecap="round"/>
+            <circle cx="67" cy="48" r="4.5" fill="currentColor"/>
+            <rect x="36" y="96" width="56" height="7" rx="3.5" fill="url(#lory-brand-spectrum)"/>
+          </svg>
+          <span class="wordmark-name">LORY</span>
+        </div>
+
+        <span class="hairline-sep" aria-hidden="true"></span>
+
+        <!-- 5 Keyboard Layouts (populated by ../js/app.js) -->
+        <nav class="layout-rail" id="layout-switcher" aria-label="Keyboard Layout"></nav>
+      </div>
+
+      <div class="whisper-right">
+        <!-- Expanding 5-Edition Ceramic Swatch Fan (synced with #theme-select) -->
+        <div class="edition-fan" id="edition-fan" role="group" aria-label="Keyboard Edition Palette">
+          <button type="button" class="edition-trigger" id="edition-trigger" title="Keyboard Edition Palette" aria-expanded="false">
+            <span class="ceramic-dot" id="edition-active-dot"></span>
+            <span class="edition-name" id="edition-active-name">Shogun</span>
+          </button>
+          <div class="edition-tray" id="edition-tray">
+            <button type="button" class="swatch-btn active" data-theme-val="edo" data-short="Shogun" title="Shogun Lacquer">
+              <span class="ceramic-dot swatch-edo"></span>
+            </button>
+            <button type="button" class="swatch-btn" data-theme-val="festival" data-short="Lantern" title="Imperial Lantern">
+              <span class="ceramic-dot swatch-festival"></span>
+            </button>
+            <button type="button" class="swatch-btn" data-theme-val="horizon" data-short="Horizon" title="Dusk Horizon">
+              <span class="ceramic-dot swatch-horizon"></span>
+            </button>
+            <button type="button" class="swatch-btn" data-theme-val="midnight" data-short="Stealth" title="Midnight Stealth">
+              <span class="ceramic-dot swatch-midnight"></span>
+            </button>
+            <button type="button" class="swatch-btn" data-theme-val="velvet" data-short="Velvet" title="Velvet Amethyst">
+              <span class="ceramic-dot swatch-velvet"></span>
+            </button>
+          </div>
+          <!-- Hidden native select preserved for ../js/app.js binding -->
+          <select id="theme-select" class="sr-only-control" aria-hidden="true" tabindex="-1">
+            <option value="edo" selected>Shogun Lacquer</option>
+            <option value="festival">Imperial Lantern</option>
+            <option value="horizon">Dusk Horizon</option>
+            <option value="midnight">Midnight Stealth</option>
+            <option value="velvet">Velvet Amethyst</option>
+          </select>
+        </div>
+
+        <!-- 3D Iso / Flat Projection Toggle -->
+        <div class="micro-seg" id="view-switcher" aria-label="Camera View">
+          <button type="button" class="seg-btn active" data-view="iso" title="3D Isometric View">3D</button>
+          <button type="button" class="seg-btn" data-view="flat" title="Flat Top-Down View">2D</button>
+        </div>
+
+        <!-- Mechanical Switch Sound Toggle -->
+        <button type="button" id="sound-toggle" class="whisper-pill active" title="Toggle Mechanical Switch Sound">
+          <span class="sound-wave" aria-hidden="true">
+            <i></i><i></i><i></i>
+          </span>
+          <span id="sound-label" class="whisper-pill-text">Sound: On</span>
+        </button>
+
+        <!-- Live Device Connection Status Pill (opens Driver dock) -->
+        <button type="button" id="hid-quick-badge" class="whisper-pill status-pill disconnected" title="Open WebHID Driver">
+          <span class="status-dot"></span>
+          <span id="hid-quick-text">Disconnected</span>
+        </button>
+
+        <!-- GitHub Repository Link -->
+        <a
+          href="https://github.com/ahmedcelik/Lory"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="whisper-pill github-link"
+          title="GitHub Repository (ahmedcelik/Lory)"
+          aria-label="GitHub Repository"
+        >
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor" aria-hidden="true">
+            <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.02 10.02 0 0 0 22 12.017C22 6.484 17.522 2 12 2Z"/>
+          </svg>
+          <span class="whisper-pill-text">GitHub</span>
+        </a>
+      </div>
+    </header>
+
+    <!-- ====================================================================
+         HERO STAGE: Infinite Matte Drafting Mat + 3D Mechanical Keyboard
+         ==================================================================== -->
+    <main class="stage" id="stage">
+      <div class="stage-bg-grid" aria-hidden="true"></div>
+
+      <!-- Subtle Paint Mode Floating Indicator (shown only when custom paint active) -->
+      <div class="paint-banner" id="paint-hint" hidden>
+        <span class="paint-pulse"></span>
+        <span>Paint Mode — click or drag across keys</span>
+      </div>
+
+      <div class="keyboard-viewport" id="keyboard-viewport">
+        <div class="keyboard-camera" id="keyboard-camera">
+          <div class="keyboard" id="keyboard" role="group" aria-label="Virtual Mechanical Keyboard">
+            <div class="keyboard-underglow" aria-hidden="true"></div>
+            <div class="keyboard-shade" aria-hidden="true"></div>
+            <div class="kb-bottom" aria-hidden="true"></div>
+            <div class="kb-wall kb-wall-s" aria-hidden="true"></div>
+            <div class="kb-wall kb-wall-n" aria-hidden="true"></div>
+            <div class="kb-wall kb-wall-w" aria-hidden="true"></div>
+            <div class="kb-wall kb-wall-e" aria-hidden="true"></div>
+            <div class="kb-status-leds" id="kb-status-leds" aria-hidden="true">
+              <span class="kb-led" id="led-num" title="Num Lock"></span>
+              <span class="kb-led" id="led-caps" title="Caps Lock"></span>
+              <span class="kb-led" id="led-scr" title="Scroll Lock"></span>
+            </div>
+            <div class="keyboard-plate" id="keyboard-plate"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ==================================================================
+           LAYER C: Corner Spatial Telemetry (Borderless, adaptive opacity)
+           ================================================================== -->
+      <div class="corner-telemetry corner-bl" id="orbit-hint" title="Hold Shift + Middle Mouse Drag to orbit · Double-click to reset">
+        <span class="tel-label">ORBIT</span>
+        <code class="mono tel-val" id="orbit-readout">48° / -18°</code>
+        <span class="tel-hint">⇧+MMB</span>
+      </div>
+
+      <div class="corner-telemetry corner-br" id="zoom-telemetry" title="Drag value to scrub · Double-click to reset 100%">
+        <span class="tel-label">ZOOM</span>
+        <button type="button" class="vernier-step" id="btn-zoom-out" aria-label="Zoom out">−</button>
+        <div class="vernier-track">
+          <input type="range" id="zoom-slider" min="55" max="145" value="100" aria-label="Zoom level" />
+        </div>
+        <span id="zoom-value" class="mono tel-val scrubbable" data-scrub-for="zoom-slider">100%</span>
+        <button type="button" class="vernier-step" id="btn-zoom-in" aria-label="Zoom in">+</button>
+      </div>
+    </main>
+
+    <!-- ====================================================================
+         LAYER B: The Morphing Magnetic Bottom Dock
+         States: rest | rgb | paint | webhid
+         ==================================================================== -->
+    <aside class="magnetic-dock" id="magnetic-dock" aria-label="Lory Instrument Dock">
+      <!-- EXPANDABLE CONSOLE BODY (morphs open above the persistent rail) -->
+      <div class="dock-drawer" id="dock-drawer" aria-hidden="true">
+        <div class="dock-drawer-inner">
+
+          <!-- ============================================================
+               CONSOLE 1: RGB STUDIO (Single-tier horizontal Braun deck)
+               ============================================================ -->
+          <section class="tab-content active" id="tab-rgb" role="tabpanel">
+            <!-- Top Micro-Rail: Quick Presets + JSON Export/Import -->
+            <div class="console-rail">
+              <div class="rail-group">
+                <span class="micro-label">PRESETS</span>
+                <div class="preset-strip" id="rgb-presets"></div>
+              </div>
+              <div class="rail-group rail-actions">
+                <span class="mode-readout mono" id="active-mode-badge">Wave</span>
+                <span class="hairline-sep-sm" aria-hidden="true"></span>
+                <button type="button" class="micro-link" id="btn-export-profile" title="Export Profile JSON">↗ JSON</button>
+                <button type="button" class="micro-link" id="btn-import-profile" title="Import Profile JSON">↙ Import</button>
+                <input type="file" id="import-profile-input" accept="application/json" hidden />
+              </div>
+            </div>
+
+            <!-- Main Horizontal Instrument Deck -->
+            <div class="rgb-deck">
+              <!-- Zone 1: 9 Lighting Modes -->
+              <div class="deck-zone zone-modes">
+                <span class="micro-label">LIGHTING MODE</span>
+                <div class="mode-strip" id="rgb-mode-grid"></div>
+              </div>
+
+              <!-- Zone 2: Analog Parameters (Braun Linear Faders + Direction Compass) -->
+              <div class="deck-zone zone-params">
+                <div class="fader-stack">
+                  <div class="braun-fader" data-fader="brightness">
+                    <div class="fader-head">
+                      <span class="micro-label">BRIGHTNESS</span>
+                      <span class="mono fader-val scrubbable" id="val-brightness" data-scrub-for="rgb-brightness">85%</span>
+                    </div>
+                    <div class="fader-track">
+                      <div class="fader-fill" id="fill-brightness"></div>
+                      <div class="fader-needle" id="needle-brightness"></div>
+                      <input type="range" id="rgb-brightness" min="0" max="100" value="85" aria-label="Brightness" />
+                    </div>
+                  </div>
+
+                  <div class="braun-fader" data-fader="speed">
+                    <div class="fader-head">
+                      <span class="micro-label">SPEED</span>
+                      <span class="mono fader-val scrubbable" id="val-speed" data-scrub-for="rgb-speed">1.0x</span>
+                    </div>
+                    <div class="fader-track">
+                      <div class="fader-fill" id="fill-speed"></div>
+                      <div class="fader-needle" id="needle-speed"></div>
+                      <input type="range" id="rgb-speed" min="0.2" max="3.0" step="0.1" value="1.0" aria-label="Effect Speed" />
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Radial Direction Compass + Segmented Buttons -->
+                <div class="direction-module">
+                  <span class="micro-label">DIRECTION</span>
+                  <div class="compass-wrap">
+                    <button type="button" class="compass-dial" id="compass-dial" title="Click to cycle wave direction">
+                      <span class="compass-ring"></span>
+                      <span class="compass-needle" id="compass-needle"></span>
+                      <span class="compass-core"></span>
+                    </button>
+                    <div class="dir-pills" id="rgb-direction">
+                      <button type="button" class="seg-btn" data-dir="ltr" title="Left to Right">→</button>
+                      <button type="button" class="seg-btn" data-dir="rtl" title="Right to Left">←</button>
+                      <button type="button" class="seg-btn active" data-dir="diagonal" title="Diagonal">↗</button>
+                      <button type="button" class="seg-btn" data-dir="radial" title="Radial">◎</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Zone 3: Ceramic Color Wells & Optical Hardware Rockers -->
+              <div class="deck-zone zone-chroma">
+                <div class="chroma-wells">
+                  <span class="micro-label">CHROMA</span>
+                  <div class="well-pair">
+                    <label class="ceramic-well" title="Primary RGB Color">
+                      <input type="color" id="rgb-primary" value="#e2b14c" />
+                      <span class="well-swatch" id="swatch-primary"></span>
+                      <span class="well-tag">PRI</span>
+                    </label>
+                    <label class="ceramic-well" title="Secondary RGB Color">
+                      <input type="color" id="rgb-secondary" value="#c9382a" />
+                      <span class="well-swatch" id="swatch-secondary"></span>
+                      <span class="well-tag">SEC</span>
+                    </label>
+                  </div>
+                </div>
+
+                <div class="rocker-stack">
+                  <label class="rocker-row" title="Case Ambient Underglow">
+                    <span class="rocker-label">Underglow</span>
+                    <input type="checkbox" class="rocker-input" id="rgb-underglow" checked />
+                    <span class="rocker-track"><span class="rocker-thumb"></span></span>
+                  </label>
+                  <label class="rocker-row" title="Keycap Legend Shine-Through">
+                    <span class="rocker-label">Legend Glow</span>
+                    <input type="checkbox" class="rocker-input" id="rgb-legend-glow" checked />
+                    <span class="rocker-track"><span class="rocker-thumb"></span></span>
+                  </label>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- ============================================================
+               CONSOLE 2: WEBHID HARDWARE PATCHBAY
+               ============================================================ -->
+          <section class="tab-content" id="tab-webhid" role="tabpanel">
+            <div class="console-rail">
+              <div class="rail-group">
+                <span class="micro-label">WEBHID PATCHBAY</span>
+                <span class="mono support-tag" id="hid-support-badge">Checking…</span>
+              </div>
+              <div class="rail-group rail-actions">
+                <button type="button" class="micro-link" id="btn-hid-expand-log" title="Toggle Expanded Packet Log">⤢ Expand Log</button>
+                <span class="hairline-sep-sm" aria-hidden="true"></span>
+                <button type="button" class="micro-link" id="btn-hid-clear-log" title="Clear Packet Log">Clear Log</button>
+              </div>
+            </div>
+
+            <div class="hid-deck">
+              <!-- Col 1: Connection & Spec Plate -->
+              <div class="hid-col hid-col-conn">
+                <div class="spec-plate" id="hid-device-card">
+                  <div class="spec-name" id="hid-device-name">No Device Connected</div>
+                  <div class="spec-meta mono">
+                    <span>VID <strong id="hid-vid">--</strong></span>
+                    <span>PID <strong id="hid-pid">--</strong></span>
+                    <span>COL <strong id="hid-cols">0</strong></span>
+                  </div>
+                </div>
+                <div class="conn-actions">
+                  <button type="button" class="hw-btn hw-btn-solid" id="btn-hid-connect">Connect HID</button>
+                  <button type="button" class="hw-btn" id="btn-hid-sim">Virtual Sim</button>
+                  <button type="button" class="hw-btn hw-btn-ghost" id="btn-hid-disconnect" disabled>Disconnect</button>
+                </div>
+              </div>
+
+              <!-- Col 2: Protocol Registers & Actuate -->
+              <div class="hid-col hid-col-proto">
+                <div class="reg-grid">
+                  <label class="reg-field reg-wide">
+                    <span class="micro-label">PROTOCOL</span>
+                    <select id="hid-protocol" class="hw-select">
+                      <option value="raw-rgb">Raw HID RGB (0xAA 0x10)</option>
+                      <option value="via-lighting">QMK / VIA Lighting (0x07)</option>
+                    </select>
+                  </label>
+                  <label class="reg-field">
+                    <span class="micro-label">REPORT ID</span>
+                    <input type="text" id="hid-report-id" class="hw-input mono" value="00" maxlength="2" />
+                  </label>
+                  <label class="reg-field">
+                    <span class="micro-label">BYTES</span>
+                    <select id="hid-packet-size" class="hw-select mono">
+                      <option value="32" selected>32B</option>
+                      <option value="64">64B</option>
+                    </select>
+                  </label>
+                </div>
+
+                <div class="sync-row">
+                  <label class="rocker-row" title="Auto-Sync RGB Changes">
+                    <span class="rocker-label">Auto-Sync</span>
+                    <input type="checkbox" class="rocker-input" id="hid-autosync" checked />
+                    <span class="rocker-track"><span class="rocker-thumb"></span></span>
+                  </label>
+                  <button type="button" class="hw-btn hw-btn-actuate" id="btn-hid-sync">
+                    <span class="actuate-dot"></span>
+                    Push Frame
+                  </button>
+                </div>
+
+                <div class="driver-loader-row">
+                  <input type="file" id="hid-driver-file" accept=".js,text/javascript" hidden />
+                  <button type="button" class="hw-btn hw-btn-ghost" id="btn-driver-file" title="Load a local .js keyboard driver">Load .js</button>
+                  <button type="button" class="hw-btn hw-btn-ghost" id="btn-driver-url" title="Load a keyboard driver from URL">Load URL</button>
+                  <button type="button" class="hw-btn hw-btn-ghost" id="btn-driver-clear" title="Remove saved external drivers" hidden>Clear Saved</button>
+                </div>
+              </div>
+
+              <!-- Col 3: Raw Hex Tester & Live TX/RX Bus -->
+              <div class="hid-col hid-col-bus">
+                <div class="hex-bar">
+                  <span class="hex-prefix mono">TX&gt;</span>
+                  <input
+                    type="text"
+                    id="hid-custom-hex"
+                    class="hex-input mono"
+                    placeholder="AA 10 02 FF 55 00"
+                    value="AA 10 02 D9 55 02"
+                  />
+                  <button type="button" class="hex-send-btn" id="btn-hid-send-hex">Send</button>
+                </div>
+                <div class="hid-console mono" id="hid-console">
+                  <div class="log-empty">Connect WebHID or Virtual Sim to inspect packets.</div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section class="tab-content" id="tab-keymap" role="tabpanel">
+            <div class="console-rail">
+              <div class="rail-group">
+                <span class="micro-label">KEYBOARD LANGUAGE &amp; KEYMAP</span>
+              </div>
+              <div class="rail-group rail-actions">
+                <span class="mode-readout mono" id="active-keymap-badge">US QWERTY</span>
+              </div>
+            </div>
+            <div class="keymap-grid" id="keymap-grid"></div>
+          </section>
+        </div>
+      </div>
+
+      <!-- ==================================================================
+           COLLAPSED PAINT BAR (Auto-surfaces when Per-Key Paint is active!)
+           ================================================================== -->
+      <div class="paint-dock-bar" id="paint-tools" hidden>
+        <span class="paint-bar-tag">
+          <span class="paint-dot"></span>
+          PER-KEY PAINT
+        </span>
+        <label class="brush-well" title="Brush Color">
+          <input type="color" id="brush-color" value="#38bdf8" />
+          <span class="brush-swatch" id="swatch-brush"></span>
+          <span class="mono brush-hex" id="brush-hex-val">#38BDF8</span>
+        </label>
+        <button type="button" class="paint-action" id="btn-paint-fill">Fill All</button>
+        <button type="button" class="paint-action" id="btn-paint-clear">Clear</button>
+        <span class="hairline-sep-sm" aria-hidden="true"></span>
+        <button type="button" class="paint-action paint-expand-btn" id="btn-paint-modes" title="Open Lighting Modes">Modes ▴</button>
+      </div>
+
+      <!-- ==================================================================
+           PERSISTENT MAGNETIC PILL RAIL (Always visible, 44px sleek bar)
+           ================================================================== -->
+      <div class="dock-rail">
+        <!-- Mode Triggers -->
+        <div class="dock-tabs" role="tablist">
+          <button type="button" class="tab-btn dock-tab" data-tab="rgb" role="tab" aria-selected="false">
+            <span class="tab-glyph" aria-hidden="true">◐</span>
+            <span>Lighting</span>
+          </button>
+          <button type="button" class="tab-btn dock-tab" data-tab="webhid" role="tab" aria-selected="false">
+            <span class="tab-glyph" aria-hidden="true">⌘</span>
+            <span>Driver</span>
+          </button>
+          <button type="button" class="tab-btn dock-tab" data-tab="keymap" role="tab" aria-selected="false">
+            <span class="tab-glyph" aria-hidden="true">Aa</span>
+            <span>Language</span>
+          </button>
+        </div>
+
+        <span class="hairline-sep-sm" aria-hidden="true"></span>
+
+        <!-- Click-to-Type Output Tape + Last Key Badge -->
+        <div class="typing-tape" id="typing-bar">
+          <div class="typing-screen mono" id="typing-screen" aria-live="polite" title="Click keys on the keyboard or type physically">
+            <span id="typing-text"></span><span class="typing-caret"></span>
+          </div>
+          <span class="mod-pill" id="mod-shift" hidden>⇧</span>
+          <span class="mod-pill" id="mod-caps" hidden>⇪</span>
+          <button type="button" class="tape-clear" id="btn-typing-clear" title="Clear typed text" aria-label="Clear typed text">×</button>
+        </div>
+
+        <span class="hairline-sep-sm" aria-hidden="true"></span>
+
+        <!-- Last Key Monospace Cap -->
+        <div class="last-key-badge" title="Last Key Pressed">
+          <code class="mono" id="last-key-readout">Ready</code>
+        </div>
+
+        <!-- Collapse Handle (visible only when drawer is open) -->
+        <button type="button" class="dock-collapse-btn" id="btn-dock-collapse" title="Collapse Dock (Esc)" aria-label="Collapse Dock">
+          ▾
+        </button>
+      </div>
+    </aside>
+  </div>
+
+  <script type="module" src="./js/app.js"></script>
+  <script type="module" src="./js/field-dock.js"></script>
+</body>
+</html>
